@@ -1,12 +1,26 @@
 import React from 'react';
 import './App.scss';
 import HomeRoute from './components/HomeRoute';
+import useApplicationData from 'hooks/useApplicationData';
 
-// Note: Rendering a single component to build components in isolation
 const App = () => {
+  const {
+    state,
+    updateToFavPhotoIds,
+    handleModalToggle, 
+    onClosePhotoDetailsModal,
+  } = useApplicationData();
+
   return (
     <div className="App">
-      <HomeRoute />
+      <HomeRoute 
+        favouritedPhotos={state.favouritedPhotos}
+        selectedPhotoData={state.selectedPhotoData}
+        isModalOpen={state.isModalOpen}
+        updateToFavPhotoIds={updateToFavPhotoIds}
+        handleModalToggle={handleModalToggle}
+        onClosePhotoDetailsModal={onClosePhotoDetailsModal}
+      />
     </div>
   );
 };
