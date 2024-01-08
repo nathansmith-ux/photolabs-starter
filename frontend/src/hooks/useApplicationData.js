@@ -63,18 +63,16 @@ const useApplicationData = () => {
   }
 
   useEffect(() => {
-    fetch('http://localhost:8001/api/photos')
-      .then(res => res.json())
-      .then(data => dispatch({ type: 'SET_PHOTO_DATA', payload: data}))
-      .catch(error => console.error('There was an error fetching the photos', error))
-  }, [])
-
-  useEffect(() => {
-    fetch('http://localhost:8001/api/topics')
-    .then(res => res.json())
-    .then(data => dispatch({ type: 'SET_TOPIC_DATA', payload: data}))
-    .catch(error => console.error('There was an error fetching the topics:', error))
-  }, [])
+    Promise.all([
+      fetch('http://localhost:8001/api/photos').then(res => res.json()),
+      fetch('http://localhost:8001/api/topics').then(res => res.json())
+    ])
+    .then(([photoData, topicData]) => {
+      dispatch({ type: 'SET_PHOTO_DATA', payload: photoData });
+      dispatch({ type: 'SET_TOPIC_DATA', payload: topicData });
+    })
+    .catch(error => console.error('There was an error fetching data:', error));
+  }, []);
 
   return {
     state,
