@@ -74,7 +74,7 @@ const useApplicationData = () => {
     .then(res => res.json())
     .then(data => dispatch({ type: 'SET_TOPIC_DATA', payload: data}))
     .catch(error => console.error('There was an error fetching the topics:', error))
-  })
+  }, [])
 
   return {
     state,
