@@ -1,4 +1,12 @@
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
+
+const initialState = {
+  favouritedPhotos: [],
+  selectedPhotoData: null,
+  isModalOpen: false,
+  photoData: [],
+  topicData: []
+}
 
 function reducer(state, action) {
   switch (action.type) {
@@ -21,16 +29,21 @@ function reducer(state, action) {
         ...state,
         isModalOpen: false
       }
+    case 'SET_PHOTO_DATA':
+      return {
+        ...state,
+        photoData: action.payload
+      }
+    
+      case 'SET_TOPIC_DATA': 
+        return {
+          ...state,
+          topicData: action.payload
+        }
 
     default:
       return state
   }
-}
-
-const initialState = {
-  favouritedPhotos: [],
-  selectedPhotoData: null,
-  isModalOpen: false
 }
 
 const useApplicationData = () => {
@@ -48,6 +61,18 @@ const useApplicationData = () => {
   const onClosePhotoDetailsModal = () => {
     dispatch({type: 'ON_CLOSE_PHOTO_DETAILS_MODAL'})
   }
+
+  useEffect(() => {
+    Promise.all([
+      fetch('http://localhost:8001/api/photos').then(res => res.json()),
+      fetch('http://localhost:8001/api/topics').then(res => res.json())
+    ])
+    .then(([photoData, topicData]) => {
+      dispatch({ type: 'SET_PHOTO_DATA', payload: photoData });
+      dispatch({ type: 'SET_TOPIC_DATA', payload: topicData });
+    })
+    .catch(error => console.error('There was an error fetching data:', error));
+  }, []);
 
   return {
     state,

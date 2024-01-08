@@ -3,7 +3,6 @@ import PhotoList from "./PhotoList";
 import "../styles/HomeRoute.scss";
 import React from 'react';
 import PhotoDetailsModal from "../routes/PhotoDetailsModal";
-import photos from "mocks/photos";
 
 const HomeRoute = ({
   favouritedPhotos,
@@ -11,19 +10,22 @@ const HomeRoute = ({
   isModalOpen,
   updateToFavPhotoIds,
   handleModalToggle,
-  onClosePhotoDetailsModal
+  onClosePhotoDetailsModal,
+  photoData,
+  topicData
 }) => {
   
   return (
     <div className="home-route">
       <TopNavigationBar 
         favouritedPhotos={favouritedPhotos}
+        topicData={topicData}
       />
       <PhotoList 
         favouritedPhotos={favouritedPhotos}
         handleFavouritePhotos={updateToFavPhotoIds}
         onPhotoClick={handleModalToggle}
-        photos={photos}
+        photos={photoData}
       />
       {isModalOpen ? (
         <PhotoDetailsModal 

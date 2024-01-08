@@ -20,6 +20,8 @@ const App = () => {
         updateToFavPhotoIds={updateToFavPhotoIds}
         handleModalToggle={handleModalToggle}
         onClosePhotoDetailsModal={onClosePhotoDetailsModal}
+        photoData={state.photoData}
+        topicData={state.topicData}
       />
     </div>
   );
