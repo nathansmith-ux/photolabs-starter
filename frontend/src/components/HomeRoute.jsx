@@ -1,32 +1,18 @@
 import TopNavigationBar from "./TopNavigationBar";
 import PhotoList from "./PhotoList";
 import "../styles/HomeRoute.scss";
-import React, { useState } from 'react';
+import React from 'react';
 import PhotoDetailsModal from "../routes/PhotoDetailsModal";
 import photos from "mocks/photos";
 
-const HomeRoute = () => {
-
-  const [favouritedPhotos, setFavouritedPhotos] = useState([])
-  const [selectedPhotoData, setSelectedPhotoData] = useState(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const handleFavouritePhotos = (photo) => {
-    const isPhotoFavourited = favouritedPhotos.some(favPhoto => favPhoto.id === photo.id)
-
-    if(isPhotoFavourited) {
-      setFavouritedPhotos(favouritedPhotos.filter(favPhoto => favPhoto.id !== photo.id))
-    } else {
-      setFavouritedPhotos([...favouritedPhotos, photo])
-    }
-
-  }
-
-  const handleModalToggle = (data) => {
-    setIsModalOpen(!isModalOpen);
-    setSelectedPhotoData(data)
-  }
-
+const HomeRoute = ({
+  favouritedPhotos,
+  selectedPhotoData,
+  isModalOpen,
+  updateToFavPhotoIds,
+  handleModalToggle,
+  onClosePhotoDetailsModal
+}) => {
   
   return (
     <div className="home-route">
@@ -35,16 +21,16 @@ const HomeRoute = () => {
       />
       <PhotoList 
         favouritedPhotos={favouritedPhotos}
-        handleFavouritePhotos={handleFavouritePhotos}
+        handleFavouritePhotos={updateToFavPhotoIds}
         onPhotoClick={handleModalToggle}
         photos={photos}
       />
       {isModalOpen ? (
         <PhotoDetailsModal 
-          onCloseClick={handleModalToggle} 
+          onCloseClick={onClosePhotoDetailsModal} 
           data={selectedPhotoData}
           favouritedPhotos={favouritedPhotos}
-          handleFavouritePhotos={handleFavouritePhotos}
+          handleFavouritePhotos={updateToFavPhotoIds}
         />
         ) : null}
     </div>
