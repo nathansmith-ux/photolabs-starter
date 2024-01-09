@@ -1,11 +1,11 @@
 import React from "react";
-
 import "../styles/TopicListItem.scss";
 
-const TopicListItem = ({title, slug}) => {
+const TopicListItem = ({title, slug, id, onClick}) => {
+
   return (
     <div className="topic-list__item">
-      <a className="topic-list__link" href={`http://localhost:3000${slug}`}>
+      <a className="topic-list__link" key={id} href={`/${slug}`} onClick={onClick}>
         <span>{title}</span>
       </a>
     </div>

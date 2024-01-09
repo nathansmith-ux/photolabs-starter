@@ -35,10 +35,22 @@ function reducer(state, action) {
         photoData: action.payload
       }
     
-      case 'SET_TOPIC_DATA': 
-        return {
+    case 'SET_TOPIC_DATA': 
+      return {
           ...state,
           topicData: action.payload
+        }
+    
+    case 'GET_PHOTOS_BY_TOPICS':
+        return {
+          ...state,
+          photoData: action.payload
+        }
+    
+    case 'GET_ALL_PHOTOS':
+        return {
+          ...state,
+          photoData: action.payload
         }
 
     default:
@@ -74,11 +86,28 @@ const useApplicationData = () => {
     .catch(error => console.error('There was an error fetching data:', error));
   }, []);
 
+  const fetchPhotosBasedOnTopic = (topicId) => {
+    fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
+      .then(res => res.json())
+      .then(photoTopicData => dispatch({ type: 'GET_PHOTOS_BY_TOPICS', payload: photoTopicData}))
+      .catch(error => console.error('There was an error fetching photos by their topics:', error));
+  }
+
+  const getAllPhotoData = () => {
+    fetch('http://localhost:8001/api/photos')
+      .then(res => res.json())
+      .then(allPhotos => dispatch({ type: 'GET_ALL_PHOTOS', payload: allPhotos}))
+      .catch(error => console.error('There was an error fetching photos by their topics:', error));
+  }
+
+
   return {
     state,
     updateToFavPhotoIds,
     handleModalToggle, 
     onClosePhotoDetailsModal,
+    fetchPhotosBasedOnTopic,
+    getAllPhotoData,
   };
 
 };

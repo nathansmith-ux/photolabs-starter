@@ -12,7 +12,9 @@ const HomeRoute = ({
   handleModalToggle,
   onClosePhotoDetailsModal,
   photoData,
-  topicData
+  topicData,
+  fetchPhotosBasedOnTopic,
+  getAllPhotoData,
 }) => {
   
   return (
@@ -20,6 +22,8 @@ const HomeRoute = ({
       <TopNavigationBar 
         favouritedPhotos={favouritedPhotos}
         topicData={topicData}
+        fetchPhotosBasedOnTopic={fetchPhotosBasedOnTopic}
+        getAllPhotoData={getAllPhotoData}
       />
       <PhotoList 
         favouritedPhotos={favouritedPhotos}
