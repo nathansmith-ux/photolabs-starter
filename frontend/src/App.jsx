@@ -2,6 +2,7 @@ import React from 'react';
 import './App.scss';
 import HomeRoute from './components/HomeRoute';
 import useApplicationData from 'hooks/useApplicationData';
+import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 
 const App = () => {
   const {
@@ -27,6 +28,15 @@ const App = () => {
         fetchPhotosBasedOnTopic={fetchPhotosBasedOnTopic}
         getAllPhotoData={getAllPhotoData}
       />
+
+      {state.isModalOpen ? (
+        <PhotoDetailsModal 
+          onCloseClick={onClosePhotoDetailsModal} 
+          data={state.selectedPhotoData}
+          favouritedPhotos={state.favouritedPhotos}
+          handleFavouritePhotos={updateToFavPhotoIds}
+        />
+      ) : null}
     </div>
   );
 };
