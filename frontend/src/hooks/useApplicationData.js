@@ -76,8 +76,8 @@ const useApplicationData = () => {
 
   useEffect(() => {
     Promise.all([
-      fetch('http://localhost:8001/api/photos').then(res => res.json()),
-      fetch('http://localhost:8001/api/topics').then(res => res.json())
+      fetch('/api/photos').then(res => res.json()),
+      fetch('/api/topics').then(res => res.json())
     ])
     .then(([photoData, topicData]) => {
       dispatch({ type: 'SET_PHOTO_DATA', payload: photoData });
@@ -87,14 +87,14 @@ const useApplicationData = () => {
   }, []);
 
   const fetchPhotosBasedOnTopic = (topicId) => {
-    fetch(`http://localhost:8001/api/topics/photos/${topicId}`)
+    fetch(`/api/topics/photos/${topicId}`)
       .then(res => res.json())
       .then(photoTopicData => dispatch({ type: 'GET_PHOTOS_BY_TOPICS', payload: photoTopicData}))
       .catch(error => console.error('There was an error fetching photos by their topics:', error));
   }
 
   const getAllPhotoData = () => {
-    fetch('http://localhost:8001/api/photos')
+    fetch('/api/photos')
       .then(res => res.json())
       .then(allPhotos => dispatch({ type: 'GET_ALL_PHOTOS', payload: allPhotos}))
       .catch(error => console.error('There was an error fetching photos by their topics:', error));
